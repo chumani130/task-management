@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class HomeController {
-    @GetMapping("/home")
+    @GetMapping
     public String homeController() {
         return "My first Restful Api";
     }
