@@ -5,10 +5,9 @@ import com.backend.taskmanagement.model.User;
 import com.backend.taskmanagement.service.TaskService;
 import com.backend.taskmanagement.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class TaskController {
@@ -24,5 +23,12 @@ public class TaskController {
         Task createdTask = taskService.createTask(task, user);
         return createdTask;
     }
+    @GetMapping("/api/task")
+    public List<Task> getAllTask() throws Exception {
+        List<Task> tasks = taskService.findAllTask();
+        return tasks;
+    }
+    public
+
 
 }
