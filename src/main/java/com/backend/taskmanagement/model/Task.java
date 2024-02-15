@@ -17,11 +17,16 @@ public class Task {
     private Long id;
 
     private String title;
+
     @ManyToOne
     private User user;
+
     private String category;
+
     private String priority;
+
     private String image;
+
     private String description;
     private String todolist;
     private boolean completed;
