@@ -17,5 +17,4 @@ public interface TaskService {
 
     public Task likeTask(Long taskId, User user) throws Exception;
 
-    Task likTask(Long taskId, User user) throws Exception;
 }
