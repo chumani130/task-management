@@ -7,6 +7,8 @@ import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Getter
 @Setter
 @Entity
@@ -20,5 +22,9 @@ public class Task {
     private String priority;
     private String description;
     private String todolist;
+    private LocalDate dueDate;
+    private LocalDate currentDate;
+
+
 
 }
