@@ -67,7 +67,6 @@ public class TaskServiceImplementation implements TaskService{
 
         return taskRepository.findAll();
     }
-
     @Override
     public Task likeTask(Long taskId, User user) throws Exception {
         Task task = findTaskById(taskId);
