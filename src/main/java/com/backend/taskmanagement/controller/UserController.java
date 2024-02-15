@@ -27,7 +27,7 @@ public class UserController {
         userRepository.deleteById(userId);
 
         return "User deleted successfully";
-        
+
     }
     @GetMapping("/users")
     public List<User> getAllUser() throws Exception{
