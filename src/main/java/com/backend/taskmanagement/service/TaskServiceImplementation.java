@@ -70,12 +70,19 @@ public class TaskServiceImplementation implements TaskService{
     @Override
     public Task likeTask(Long taskId, User user) throws Exception {
         Task task = findTaskById(taskId);
-        if(task.getLikes().contains(user.getId())) {
+
+        // Check if the user ID is in the likes set
+        if (task.getLikes().contains(user.getId())) {
+            // User has already liked the task, remove the like
             task.getLikes().remove(user.getId());
-        }
-        else {
+        } else {
+            // User is liking the task, add the like
             task.getLikes().add(user.getId());
         }
-        return null;
+
+        // Update the likes count in the task
+        task.setLikesCount(task.getLikes().size());
+
+        return taskRepository.save(task);
     }
 }
