@@ -10,12 +10,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api/tasks")
 public class TaskController {
     @Autowired
     private TaskService taskService;
     @Autowired
     private UserService userService;
-    @PostMapping("/api/task/user/{userId}")
+    @PostMapping("/user/{userId}")
     public Task createTask(@RequestBody Task task, @PathVariable Long userId) throws Exception{
 
         User user = userService.findUserById(userId);
@@ -23,22 +24,22 @@ public class TaskController {
         Task createdTask = taskService.createTask(task, user);
         return createdTask;
     }
-    @GetMapping("/api/task")
+    @GetMapping()
     public List<Task> getAllTask() throws Exception {
         List<Task> tasks = taskService.findAllTask();
         return tasks;
     }
-    @DeleteMapping("api/task/{taskId}")
+    @DeleteMapping("/{taskId}")
     public String deleteTask(@PathVariable Long taskId) throws Exception {
         taskService.deleteTask(taskId);
         return "task deleted successfully";
     }
-    @PutMapping("/api/task/{id}")
+    @PutMapping("/{id}")
     public Task updateTask(@RequestBody Task task, @PathVariable Long id) throws Exception {
         Task updatedTask = taskService.updateTask(task, id);
         return updatedTask;
     }
-    @PutMapping("/api/task/{taskId}/user/{userId}/like")
+    @PutMapping("/{taskId}/user/{userId}/like")
     public Task likeTask(@PathVariable Long userId, @PathVariable Long taskId) throws Exception {
         User user = userService.findUserById(userId);
         Task updatedTask = taskService.likeTask(taskId, user);
