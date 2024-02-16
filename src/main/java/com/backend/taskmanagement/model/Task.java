@@ -6,7 +6,9 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -33,8 +35,9 @@ public class Task {
     private LocalDate dueDate;
     private LocalDate createdAt;
 
-    private List<Long> likes = new ArrayList<>();
+    @ElementCollection
+    private Set<Long> likes = new HashSet<>();
 
-
+    private int likesCount;
 
 }
