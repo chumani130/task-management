@@ -38,14 +38,7 @@ public class TaskController {
         Task updatedTask = taskService.updateTask(task, id);
         return updatedTask;
     }
-
-//    @PutMapping("/api/task/user/{id}/user/{userId}")
-//    public Task likeTask(@PathVariable Long userId, @PathVariable Long id) throws Exception{
-//
-//        User user = userService.findUserById(userId);
-//        Task updateTask = taskService.likeTask(id, user);
-//        return updateTask;
-//    }
+    
     @PutMapping("/api/task/{taskId}/user/{userId}/like")
     public Task likeTask(@PathVariable Long userId, @PathVariable Long taskId) throws Exception {
         User user = userService.findUserById(userId);
