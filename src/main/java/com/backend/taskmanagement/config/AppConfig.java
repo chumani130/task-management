@@ -1,26 +1,39 @@
 package com.backend.taskmanagement.config;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.boot.autoconfigure.integration.IntegrationProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.HttpBasicConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 
 @Configuration
 public class AppConfig {
-    SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+    @Bean
+    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        httpSecurity.sessionManagement(management => management.sessionCreationPolicy(
-                sessionCreationPolicy.STATELESS)).authorizeHttprequests(
-                        // endpoints that should be protected
+        http.sessionManagement(management => management.sessionCreationPolicy(
+                sessionCreationPolicy.STATELESS))
+        .authorizeHttpRequests(
                         Authorize => Authorize.requestMatchers("/api/**").authenticated()
-                        .anyRequest().permitAll()).csrf(csrf=>csrf.disabled())
+                        .anyRequest().permitAll())
+        .csrf(csrf=>csrf.disabled())
                         .cors(cors=>cors.configurationSource(CorsConfigurationSource()))
-                        .httpBasic(WithDefaults())
-                        .formLogin(WithDefaults());
-        return null;
+        .formLogin(withDefaults());
+        return http.build();
+    }
+    private CorsConfigurationSource corsConfigurationSource() {
+
+        return new CorsConfigurationSource() {
+            @Override
+            public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
+                return null;
+            }
+        };
     }
 
 
