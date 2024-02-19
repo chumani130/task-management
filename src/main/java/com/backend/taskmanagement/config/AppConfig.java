@@ -36,7 +36,8 @@ public class AppConfig {
             public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
                 CorsConfiguration cfg = new CorsConfiguration();
                 cfg.setAllowedOrigins(Collections.singletonList("*"));
-                cfg.set
+                cfg.setAllowedMethods(Collections.singletonList("*"));
+                
                 return null;
             }
         };
