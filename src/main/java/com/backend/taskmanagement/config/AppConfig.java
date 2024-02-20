@@ -18,15 +18,15 @@ import java.util.Collections;
 public class AppConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-
-        http.sessionManagement(management => management.sessionCreationPolicy(
-                sessionCreationPolicy.STATELESS))
-        .authorizeHttpRequests(
-                        Authorize => Authorize.requestMatchers("/api/**").authenticated()
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authorizeRequests(authorize -> authorize
+                        .antMatchers("/api/**").authenticated()
                         .anyRequest().permitAll())
-        .csrf(csrf=>csrf.disabled())
-                        .cors(cors=>cors.configurationSource(CorsConfigurationSource()))
-        .formLogin(withDefaults());
+                .csrf(csrf -> csrf.disable())
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .formLogin(withDefaults());
+
         return http.build();
     }
     private CorsConfigurationSource corsConfigurationSource() {
