@@ -1,5 +1,6 @@
 package com.backend.taskmanagement.filters;
 
+import com.backend.taskmanagement.services.jwt.UserDetailsServiceImpl;
 import com.backend.taskmanagement.utils.JwtUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
