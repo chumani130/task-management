@@ -1,13 +1,18 @@
 package com.backend.taskmanagement.contoller;
 
 import com.backend.taskmanagement.dto.AuthenticationRequest;
+import com.backend.taskmanagement.dto.SignupRequest;
+import com.backend.taskmanagement.dto.UserDto;
 import com.backend.taskmanagement.model.User;
 import com.backend.taskmanagement.repository.UserRepository;
+import com.backend.taskmanagement.services.auth.AuthService;
 import com.backend.taskmanagement.utils.JwtUtil;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -36,6 +41,8 @@ public class AuthController {
     public static final String TOKEN_PRIFIX = "Bearer ";
     public static final String HEADER_STRING = "Authorization";
 
+    private final AuthService authService;
+
     @PutMapping("/authentication")
     public void createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest, HttpServletResponse response) throws IOException, JSONException {
         try {
@@ -56,6 +63,15 @@ public class AuthController {
 
             response.addHeader(HEADER_STRING, TOKEN_PRIFIX + jwt);
         }
+
+    }
+    @PutMapping("/sin-up")
+    public ResponseEntity<?> signupUser(@RequestBody SignupRequest signupRequest) {
+        if (authService.hasUserWithEmail(signupRequest.getEmail())){
+            return new ResponseEntity<>("user already exist", HttpStatus.NOT_ACCEPTABLE);
+        }
+        UserDto userDto = authService.createUser(signupRequest);
+        return new ResponseEntity<>(userDto, HttpStatus.OK);
 
     }
 }
