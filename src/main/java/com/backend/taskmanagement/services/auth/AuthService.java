@@ -5,4 +5,6 @@ import com.backend.taskmanagement.dto.UserDto;
 
 public interface AuthService {
     UserDto createUser(SignupRequest signupRequest);
+
+    Boolean hasUserWithEmail(String email);
 }
