@@ -14,9 +14,12 @@ public class User {
     private Long id;
     private String password;
     private String email;
-    private String userName;
+    private String name;
     private UserRole role;
     @Lob
     @Column(columnDefinition = "longblob")
     private byte[] img;
+
+    public void setName(String name) {
+    }
 }
