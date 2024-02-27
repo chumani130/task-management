@@ -3,7 +3,7 @@ package com.backend.taskmanagement.contoller;
 import com.backend.taskmanagement.dto.AuthenticationRequest;
 import com.backend.taskmanagement.dto.SignupRequest;
 import com.backend.taskmanagement.dto.UserDto;
-import com.backend.taskmanagement.model.User;
+import com.backend.taskmanagement.entity.*;
 import com.backend.taskmanagement.repository.UserRepository;
 import com.backend.taskmanagement.services.auth.AuthService;
 import com.backend.taskmanagement.utils.JwtUtil;
