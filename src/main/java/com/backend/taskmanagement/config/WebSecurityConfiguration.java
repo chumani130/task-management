@@ -23,7 +23,8 @@ public class WebSecurityConfiguration {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http.csrf()
+        return http
+                .csrf()
                 .disable().authorizeHttpRequests()
                 .requestMatchers("/authenticate", "/sign-up", "/task/**")
                 .permitAll()
