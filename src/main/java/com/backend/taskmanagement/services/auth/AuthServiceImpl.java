@@ -3,7 +3,7 @@ package com.backend.taskmanagement.services.auth;
 import com.backend.taskmanagement.dto.SignupRequest;
 import com.backend.taskmanagement.dto.UserDto;
 import com.backend.taskmanagement.enums.UserRole;
-import com.backend.taskmanagement.model.User;
+import com.backend.taskmanagement.entity.User;
 import com.backend.taskmanagement.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
