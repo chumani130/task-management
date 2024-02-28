@@ -24,14 +24,10 @@ public class WebSecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-                .csrf()
-                .disable().authorizeHttpRequests()
-                .requestMatchers("/authenticate", "/sign-up", "/task/**")
-                .permitAll()
-                .and()
-                .authorizeHttpRequests()
-                .requestMatchers("/api/**")
-                .authenticated()
+                .csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/authenticate", "/sign-up", "/task/**").permitAll() // Allow access to these endpoints for all users
+                .antMatchers("/api/**").authenticated() // Require authentication for other API endpoints
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -39,6 +35,7 @@ public class WebSecurityConfiguration {
                 .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
