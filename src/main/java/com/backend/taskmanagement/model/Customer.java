@@ -19,11 +19,5 @@ public class Customer implements Serializable {
     @Id
     @GeneratedValue
     private long id;
-    private String username;
-    private String firstname;
-    private String lastname;
-    private String productname;
-    private String productcategory;
-    private double price;
     private String date;
 }
