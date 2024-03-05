@@ -1,11 +1,14 @@
 package com.backend.taskmanagement.controller;
 
 import com.backend.taskmanagement.model.Task;
+import com.backend.taskmanagement.model.TaskRequest;
 import com.backend.taskmanagement.services.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -14,12 +17,14 @@ public class TaskController {
     @Autowired
     private TaskService taskService;
 
-    @PostMapping
-    public ResponseEntity<Task> createTask(@RequestBody Task task) {
-        return ResponseEntity.ok(taskService.createTask(task));
+    @PostMapping("/create")
+    public ResponseEntity<Task> createTask(@RequestBody TaskRequest taskRequest, Principal principal) {
+        // You can create a TaskRequest class to encapsulate the incoming data
+        Task task = taskService.createTask(taskRequest, principal.getName());
+        return ResponseEntity.status(HttpStatus.CREATED).body(task);
     }
 
-    @GetMapping
+    @GetMapping("/alltasks")
     public ResponseEntity<List<Task>> getAllTasks() {
         return ResponseEntity.ok(taskService.getAllTasks());
     }
