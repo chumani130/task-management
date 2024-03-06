@@ -7,7 +7,9 @@ import com.backend.taskmanagement.model.SubTask;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TaskService {
@@ -15,25 +17,7 @@ public class TaskService {
     private TaskRepository taskRepository;
 
     public Task createTask(TaskRequest taskRequest) {
-        Task task = new Task();
-        // Set task properties using taskRequest
-        task.setCategory(taskRequest.getCategory());
-        task.setTitle(taskRequest.getTitle());
-        task.setPriority(taskRequest.getPriority());
-        task.setDescription(taskRequest.getDescription());
-        task.setEndDate(taskRequest.getEndDate());
-        task.setDateCreated(taskRequest.getDateCreated());
-        task.setAllowNotification(taskRequest.isAllowNotification());
-
-        List<SubTask> subTasks = taskRequest.getSubTasks();
-        if (subTasks.size() >= 5) {
-            subTasks.forEach(task::addSubTask);
-        } else {
-            // Add logic to handle when fewer than five subtasks are provided
-            // For example, you can throw an exception or add default subtasks
-            throw new IllegalArgumentException("At least five subtasks are required.");
-        }
-
+        Task task = mapTaskRequestToTask(taskRequest);
         return taskRepository.save(task);
     }
 
@@ -56,4 +40,29 @@ public class TaskService {
     public List<Task> getTasksInCategory(String categoryName) {
         return taskRepository.findByCategoryName(categoryName);
     }
+
+    public Task updateTask(Long id, TaskRequest taskRequest) {
+        Task existingTask = taskRepository.findById(id).orElse(null);
+        if (existingTask != null) {
+            mapTaskRequestToTask(taskRequest, existingTask);
+            taskRepository.save(existingTask);
+        }
+        return existingTask;
+    }
+    public Task mapTaskRequestToTask(TaskRequest taskRequest, Task task) {
+        task.setName(taskRequest.getTitle());
+        task.setDescription(taskRequest.getDescription());
+        task.setCompleted(false); // You might want to set this based on your requirements
+        task.setDate(LocalDate.parse(taskRequest.getDateCreated()));
+        // Set other properties as needed
+
+        // Map subtasks
+        List<SubTask> subTasks = taskRequest.getSubTasks().stream()
+                .map(subTaskDescription -> new SubTask(subTaskDescription))
+                .collect(Collectors.toList());
+        task.setSubTasks(subTasks);
+
+        return task;
+    }
+
 }
