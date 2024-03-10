@@ -1,8 +1,9 @@
-package com.backend.taskmanagement.services;
+package com.backend.taskmanagement.services.impl;
 
 import com.backend.taskmanagement.dao.UserRepository;
 import com.backend.taskmanagement.model.User;
 import com.backend.taskmanagement.model.RegisterUser;
+import com.backend.taskmanagement.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
