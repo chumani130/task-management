@@ -1,8 +1,8 @@
 package com.backend.taskmanagement.controller;
 
-import com.chumz.ServiceBookingSystem.dto.SignupRequestDTO;
-import com.chumz.ServiceBookingSystem.dto.UserDto;
-import com.chumz.ServiceBookingSystem.services.authentication.AuthService;
+import com.backend.taskmanagement.dto.SignupRequestDTO;
+import com.backend.taskmanagement.dto.UserDto;
+import com.backend.taskmanagement.services.auth.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,21 +17,21 @@ public class AuthenticationController {
     private AuthService authService;
 
     @PostMapping("/customer/sign-up")
-    public ResponseEntity<?> signupClient(@RequestBody SignupRequestDTO signupRequestDTO) {
+    public ResponseEntity<?> signupCustomer(@RequestBody SignupRequestDTO signupRequestDTO) {
         if(authService.presentByEmail(signupRequestDTO.getEmail())) {
-            return new ResponseEntity<>("Client already exist with this email", HttpStatus.NOT_ACCEPTABLE);
+            return new ResponseEntity<>("Customer already exist with this email", HttpStatus.NOT_ACCEPTABLE);
         }
-        UserDto createdUser = authService.signupClient(signupRequestDTO);
+        UserDto createdUser = authService.signupCustomer(signupRequestDTO);
 
         return new ResponseEntity<>(createdUser, HttpStatus.OK);
     }
 
     @PostMapping("/admin/sign-up")
-    public ResponseEntity<?> signupCompany(@RequestBody SignupRequestDTO signupRequestDTO) {
+    public ResponseEntity<?> signupAdmin(@RequestBody SignupRequestDTO signupRequestDTO) {
         if(authService.presentByEmail(signupRequestDTO.getEmail())) {
-            return new ResponseEntity<>("Company already exist with this email", HttpStatus.NOT_ACCEPTABLE);
+            return new ResponseEntity<>("Admin already exist with this email", HttpStatus.NOT_ACCEPTABLE);
         }
-        UserDto createdUser = authService.signupClient(signupRequestDTO);
+        UserDto createdUser = authService.signupCustomer(signupRequestDTO);
 
         return new ResponseEntity<>(createdUser, HttpStatus.OK);
     }
