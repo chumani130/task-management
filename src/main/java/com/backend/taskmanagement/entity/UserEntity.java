@@ -2,22 +2,24 @@ package com.backend.taskmanagement.entity;
 
 import com.backend.taskmanagement.dto.UserDto;
 import com.backend.taskmanagement.model.BaseEntity;
-import com.backend.taskmanagement.model.Role;
+import com.backend.taskmanagement.enums.UserRole;
 import com.backend.taskmanagement.model.Token;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
 import java.util.List;
 
 @Entity
-@Getter
-@Setter
 @Table(name = "users")
+@Data
 public class UserEntity extends BaseEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @NotEmpty(message = "{username.name.not.empty}")
     private String username;
@@ -35,7 +37,7 @@ public class UserEntity extends BaseEntity {
     private String photo;
 
     @Enumerated(EnumType.STRING)
-    private Role role;
+    private UserRole role;
 
 //    @OneToMany(mappedBy = "user")
 //    private List<Token> tokens;
@@ -43,8 +45,8 @@ public class UserEntity extends BaseEntity {
         UserDto userDto = new UserDto();
         userDto.setId(id);
         userDto.setEmail(email);
-        userDto.setName(name);
-        userDto.setRole(role);
+        userDto.setUsername(username);
+        userDto.setUserRole(role);
 
         return userDto;
 
