@@ -16,10 +16,8 @@ public class UserServiceImpl implements AuthService {
     public UserDto signupCustomer(SignupRequestDTO signupRequestDTO) {
         UserEntity user = new UserEntity();
 
-        user.setName(signupRequestDTO.getName());
-        user.setLastname(signupRequestDTO.getLastname());
+        user.setUsername(signupRequestDTO.getUsername());
         user.setEmail(signupRequestDTO.getEmail());
-        user.setPhone(signupRequestDTO.getPhone());
         user.setPassword(signupRequestDTO.getPassword());
 
         user.setRole(UserRole.CUSTOMER);
@@ -31,7 +29,7 @@ public class UserServiceImpl implements AuthService {
     public UserDto signupAdmin(SignupRequestDTO signupRequestDTO) {
         UserEntity user = new UserEntity();
 
-        user.setUsername(signupRequestDTO.getUsername();
+        user.setUsername(signupRequestDTO.getUsername());
         user.setEmail(signupRequestDTO.getEmail());
         user.setPassword(signupRequestDTO.getPassword());
 
