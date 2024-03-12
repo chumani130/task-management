@@ -1,5 +1,6 @@
 package com.backend.taskmanagement.entity;
 
+import com.backend.taskmanagement.dto.UserDto;
 import com.backend.taskmanagement.model.BaseEntity;
 import com.backend.taskmanagement.model.Role;
 import com.backend.taskmanagement.model.Token;
@@ -36,6 +37,18 @@ public class UserEntity extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToMany(mappedBy = "user")
-    private List<Token> tokens;
+//    @OneToMany(mappedBy = "user")
+//    private List<Token> tokens;
+    public UserDto getDto() {
+        UserDto userDto = new UserDto();
+        userDto.setId(id);
+        userDto.setEmail(email);
+        userDto.setName(name);
+        userDto.setRole(role);
+
+        return userDto;
+
+
+}
+
 }
