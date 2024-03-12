@@ -1,38 +1,38 @@
 package com.backend.taskmanagement.controller;
 
-import com.backend.taskmanagement.model.AuthenticationRequest;
-import com.backend.taskmanagement.model.AuthenticationResponse;
-import com.backend.taskmanagement.services.AuthenticationService;
-import com.backend.taskmanagement.model.RegisterRequest;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
+import com.chumz.ServiceBookingSystem.dto.SignupRequestDTO;
+import com.chumz.ServiceBookingSystem.dto.UserDto;
+import com.chumz.ServiceBookingSystem.services.authentication.AuthService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import java.io.IOException;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
 @RestController
-@RequestMapping("/api/v1/auth")
-@RequiredArgsConstructor
-@CrossOrigin
 public class AuthenticationController {
-    private final AuthenticationService service;
-    @PostMapping("/sign-up")
-    public ResponseEntity<AuthenticationResponse> register(
-            @RequestBody RegisterRequest request
-    ) {
-        return ResponseEntity.ok(service.register(request));
+    @Autowired
+    private AuthService authService;
+
+    @PostMapping("/customer/sign-up")
+    public ResponseEntity<?> signupClient(@RequestBody SignupRequestDTO signupRequestDTO) {
+        if(authService.presentByEmail(signupRequestDTO.getEmail())) {
+            return new ResponseEntity<>("Client already exist with this email", HttpStatus.NOT_ACCEPTABLE);
+        }
+        UserDto createdUser = authService.signupClient(signupRequestDTO);
+
+        return new ResponseEntity<>(createdUser, HttpStatus.OK);
     }
-    @PostMapping("/authenticate")
-    public ResponseEntity<AuthenticationResponse> authenticate(
-            @RequestBody AuthenticationRequest request
-    ) {
-        return ResponseEntity.ok(service.authenticate(request));
-    }
-    @PostMapping("/refresh-token")
-    public void refreshToken(
-            HttpServletRequest request,
-            HttpServletResponse response
-    ) throws IOException {
-        service.refreshToken(request, response);
+
+    @PostMapping("/admin/sign-up")
+    public ResponseEntity<?> signupCompany(@RequestBody SignupRequestDTO signupRequestDTO) {
+        if(authService.presentByEmail(signupRequestDTO.getEmail())) {
+            return new ResponseEntity<>("Company already exist with this email", HttpStatus.NOT_ACCEPTABLE);
+        }
+        UserDto createdUser = authService.signupClient(signupRequestDTO);
+
+        return new ResponseEntity<>(createdUser, HttpStatus.OK);
     }
 }
