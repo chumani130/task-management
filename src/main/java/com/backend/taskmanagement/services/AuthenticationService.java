@@ -1,8 +1,5 @@
 package com.backend.taskmanagement.services;
 
-import com.backend.taskmanagement.config.JwtService;
-import com.backend.taskmanagement.dao.TokenRepository;
-import com.backend.taskmanagement.dao.UserRepository;
 import com.backend.taskmanagement.model.AuthenticationRequest;
 import com.backend.taskmanagement.model.AuthenticationResponse;
 import com.backend.taskmanagement.model.RegisterRequest;
